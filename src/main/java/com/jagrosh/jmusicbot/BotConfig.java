@@ -76,7 +76,7 @@ public class BotConfig
             Config config = ConfigFactory.load();
             
             // set values
-            token = config.getString("token");
+            token = System.getenv("token");
             prefix = config.getString("prefix");
             altprefix = config.getString("altprefix");
             helpWord = config.getString("help");
