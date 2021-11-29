@@ -1,2 +1,3 @@
 owner = 155017944248745985
 prefix = "="
+game = "=help"
