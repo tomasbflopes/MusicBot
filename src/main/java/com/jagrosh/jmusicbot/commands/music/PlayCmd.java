@@ -204,11 +204,10 @@ public class PlayCmd extends MusicCommand
         public void loadFailed(FriendlyException throwable)
         {
             if(throwable.severity==Severity.COMMON && throwable.getMessage().equals("This IP address has been blocked by YouTube (429).")) {
-                String[] env = {"PATH=/bin:/usr/bin/"};
-                String cmd = "restart.sh";
+                String[] cmd = new String[]{"/bin/sh", "restart.sh"};
                 try {
                     m.editMessage(event.getClient().getError()+" IP address blocked by YouTube. Restarting bot...").queue();
-                    Runtime.getRuntime().exec(cmd, env);
+                    Runtime.getRuntime().exec(cmd);
                 } catch (IOException e) {
                     m.editMessage(event.getClient().getError()+" Error loading track. Error also occurred handling error: "+throwable.getMessage()).queue();
                 }
