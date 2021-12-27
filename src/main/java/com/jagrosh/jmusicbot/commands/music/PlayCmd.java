@@ -30,6 +30,8 @@ import com.jagrosh.jmusicbot.commands.DJCommand;
 import com.jagrosh.jmusicbot.commands.MusicCommand;
 import com.jagrosh.jmusicbot.playlist.PlaylistLoader.Playlist;
 import com.jagrosh.jmusicbot.utils.FormatUtil;
+
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
@@ -201,7 +203,16 @@ public class PlayCmd extends MusicCommand
         @Override
         public void loadFailed(FriendlyException throwable)
         {
-            if(throwable.severity==Severity.COMMON)
+            if(throwable.severity==Severity.COMMON && throwable.getMessage().equals("This IP address has been blocked by YouTube (429).")) {
+                String[] env = {"PATH=/bin:/usr/bin/"};
+                String cmd = "restart.sh";
+                try {
+                    m.editMessage(event.getClient().getError()+" IP address blocked by YouTube. Restarting bot...").queue();
+                    Runtime.getRuntime().exec(cmd, env);
+                } catch (IOException e) {
+                    m.editMessage(event.getClient().getError()+" Error loading track. Error also occurred handling error: "+throwable.getMessage()).queue();
+                }
+            } else if(throwable.severity==Severity.COMMON)
                 m.editMessage(event.getClient().getError()+" Error loading: "+throwable.getMessage()).queue();
             else
                 m.editMessage(event.getClient().getError()+" Error loading track.").queue();
