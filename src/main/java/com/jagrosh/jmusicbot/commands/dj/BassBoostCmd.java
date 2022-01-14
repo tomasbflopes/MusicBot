@@ -35,7 +35,7 @@ public class BassBoostCmd extends DJCommand
     {
         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
         AudioPlayer player = handler.getPlayer();
-        int bassboost = Math.round(this.equalizer.getGain(4) / MULT_CONSTANT);
+        int bassboost = Math.round((this.equalizer.getGain(14) + 0.1f) / MULT_CONSTANT);
         player.setFilterFactory(equalizer);
         if(event.getArgs().isEmpty())
         {
