@@ -24,7 +24,7 @@ public class BassBoostCmd extends DJCommand
         this.aliases = bot.getConfig().getAliases(this.name);
         this.equalizer = new EqualizerFactory();
         this.help = "sets or shows bass boost (default 0)";
-        this.arguments = "[0-100]";
+        this.arguments = "[0-200]";
         for (int i = 0; i < BASS_BOOST.length; i++) {
             equalizer.setGain(i, BASS_BOOST[i]);
         }
@@ -49,9 +49,9 @@ public class BassBoostCmd extends DJCommand
             }catch(NumberFormatException e){
                 nbassboost = -1;
             }
-            if(nbassboost<0 || nbassboost>100)
+            if(nbassboost<0 || nbassboost>200)
                 event.reply(event.getClient().getError()+
-                        " Bass boost level must be a valid integer between 0 and 100!");
+                        " Bass boost level must be a valid integer between 0 and 200!");
             else
             {
                 for (int i = 0; i < BASS_BOOST.length; i++) {
