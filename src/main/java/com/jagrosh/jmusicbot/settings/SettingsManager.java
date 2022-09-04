@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author John Grosh (john.a.grosh@gmail.com)
  */
-public class SettingsManager implements GuildSettingsManager<Settings>
+public class SettingsManager implements GuildSettingsManager
 {
     private final static double SKIP_RATIO = .55;
     private final HashMap<Long,Settings> settings;
