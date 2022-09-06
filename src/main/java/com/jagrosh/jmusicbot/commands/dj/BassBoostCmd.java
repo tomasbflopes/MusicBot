@@ -10,10 +10,10 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 
 public class BassBoostCmd extends DJCommand
 {
-    private static final float[] BASS_BOOST = { 0.3f, 0.25f, 0.2f, 0.15f, 0.1f, 0.05f, 0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+    private static final float[] BASS_BOOST = { 0.2f, 0.15f, 0.1f, 0.05f, 0.0f, -0.05f, -0.1f, -0.1f, -0.1f, -0.1f,
+            -0.1f, -0.1f, -0.1f, -0.1f, -0.1f };
 
-    private static final float MULT_CONSTANT = 0.01f;
+    private static final float MULT_CONSTANT = 0.011f;
 
     private final EqualizerFactory equalizer;
 
@@ -23,10 +23,10 @@ public class BassBoostCmd extends DJCommand
         this.name = "bassboost";
         this.aliases = bot.getConfig().getAliases(this.name);
         this.equalizer = new EqualizerFactory();
-        this.help = "sets or shows bass boost (default 0)";
-        this.arguments = "[0-200]";
+        this.help = "sets or shows bass boost (default 10)";
+        this.arguments = "[0-100]";
         for (int i = 0; i < BASS_BOOST.length; i++) {
-            equalizer.setGain(i, BASS_BOOST[i]);
+            equalizer.setGain(i, BASS_BOOST[i] + MULT_CONSTANT * 10);
         }
     }
 
@@ -35,7 +35,7 @@ public class BassBoostCmd extends DJCommand
     {
         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
         AudioPlayer player = handler.getPlayer();
-        int bassboost = Math.round(this.equalizer.getGain(BASS_BOOST.length - 1) / MULT_CONSTANT);
+        int bassboost = Math.round(this.equalizer.getGain(4) / MULT_CONSTANT);
         player.setFilterFactory(equalizer);
         if(event.getArgs().isEmpty())
         {
@@ -49,9 +49,9 @@ public class BassBoostCmd extends DJCommand
             }catch(NumberFormatException e){
                 nbassboost = -1;
             }
-            if(nbassboost<0 || nbassboost>200)
+            if(nbassboost<0 || nbassboost>100)
                 event.reply(event.getClient().getError()+
-                        " Bass boost level must be a valid integer between 0 and 200!");
+                        " Bass boost level must be a valid integer between 0 and 100!");
             else
             {
                 for (int i = 0; i < BASS_BOOST.length; i++) {
@@ -62,5 +62,4 @@ public class BassBoostCmd extends DJCommand
             }
         }
     }
-
 }
