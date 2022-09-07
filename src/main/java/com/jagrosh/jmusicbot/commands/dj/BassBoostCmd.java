@@ -10,8 +10,8 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 
 public class BassBoostCmd extends DJCommand
 {
-    private static final float[] BASS_BOOST = { 0.3f, 0.25f, 0.2f, 0.15f, 0.1f, 0.05f, 0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+    private static final float[] BASS_BOOST = { 0.05f, 0.05f, 0.05f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, -0.05f, -0.05f, -0.05f };
 
     private static final float MULT_CONSTANT = 0.01f;
 
@@ -35,7 +35,7 @@ public class BassBoostCmd extends DJCommand
     {
         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
         AudioPlayer player = handler.getPlayer();
-        int bassboost = Math.round(this.equalizer.getGain(BASS_BOOST.length - 1) / MULT_CONSTANT);
+        int bassboost = Math.round(this.equalizer.getGain(3) / MULT_CONSTANT);
         player.setFilterFactory(equalizer);
         if(event.getArgs().isEmpty())
         {
